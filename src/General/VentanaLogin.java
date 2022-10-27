@@ -7,21 +7,21 @@ package General;
 import Cliente.VentanaRegistroCliente;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.sql.*;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import static trabajofinal.TrabajoFinal.cn;
 
 /**
  *
  * @author Andres
  */
-public class Ventana extends javax.swing.JFrame {
+public class VentanaLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form Ventana
      */
-    public Ventana() {
+    public VentanaLogin() {
         initComponents();
     }
 
@@ -219,46 +219,44 @@ public class Ventana extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventana().setVisible(true);
+                new VentanaLogin().setVisible(true);
             }
         });
     }
     public boolean login(String usuario,String contrasena)
     {
-        boolean autenticacion=false;
+        boolean autenticacion = false;
         
-        Scanner sc=new Scanner(System.in);
-        
-        File file = new File("Registro.txt");
-        try{
-            Scanner inputBuffer = new Scanner(file);
-            while(inputBuffer.hasNext())
+        PreparedStatement st;
+        ResultSet rs;
+        try {
+            st = cn.con.prepareStatement("select * from usuario where nickUsuario=? and "
+                    + "contraseña=?");
+            st.setString(1,usuario);
+            st.setString(2, contrasena);
+            rs=st.executeQuery();
+            cn.con.close();
+            if (rs != null)
             {
-               String line = inputBuffer.nextLine();
-               String[] values = line.split(",");
-               if(values[0].equals(usuario)&&values[1].equals(contrasena))
-               {
-                   autenticacion=true;
-                   return autenticacion;
-               }
-            }   
-        }
-        catch(FileNotFoundException fe)
-        {
-            System.out.println(fe);
+                autenticacion=true;
+                return autenticacion; 
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
         return autenticacion;
                 

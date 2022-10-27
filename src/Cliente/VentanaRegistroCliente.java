@@ -6,7 +6,7 @@ package Cliente;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import General.Ventana;
+import General.VentanaLogin;
 
 /**
  *
