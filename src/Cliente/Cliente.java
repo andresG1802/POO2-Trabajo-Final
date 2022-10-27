@@ -2,15 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trabajofinal;
+package Cliente;
+
+import General.Usuario;
 
 /**
  *
- * @author Andres
+ * @author julianquispe
  */
-public class Administrador extends Persona{
-    public void registrarProducto()
-    {
-        
-    }    
+public class Cliente extends Usuario {
+    
 }

@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package trabajofinal;
+package General;
 
+import Cliente.VentanaRegistroCliente;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -69,13 +70,11 @@ public class Ventana extends javax.swing.JFrame {
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 350, 870));
 
         jLabel2.setFont(new java.awt.Font("Britannic Bold", 1, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("INICIAR SESION");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, 60));
 
         jCheckBox2.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jCheckBox2.setForeground(new java.awt.Color(0, 0, 0));
         jCheckBox2.setText("Administrador");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,11 +85,9 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText(" Contraseña");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 260, 30));
 
-        usuarioField.setBackground(new java.awt.Color(255, 255, 255));
         usuarioField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         usuarioField.setText("Ingrese su nombre de usuario");
         usuarioField.setBorder(null);
@@ -108,7 +105,6 @@ public class Ventana extends javax.swing.JFrame {
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 432, 350, 0));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 330, 30));
 
-        contraField.setBackground(new java.awt.Color(255, 255, 255));
         contraField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         contraField.setText("Ingrese su contraseña");
         contraField.setBorder(null);
@@ -144,7 +140,6 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText(" Nombre de usuario:");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 260, 30));
 
@@ -188,7 +183,7 @@ public class Ventana extends javax.swing.JFrame {
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        ventanaRegistro ventanaregistro=new ventanaRegistro();
+        VentanaRegistroCliente ventanaregistro=new VentanaRegistroCliente();
         ventanaregistro.setVisible(true);
     }//GEN-LAST:event_botonRegistrarseActionPerformed
 

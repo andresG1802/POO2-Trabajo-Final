@@ -4,6 +4,8 @@
  */
 package trabajofinal;
 
+import General.Ventana;
+
 /**
  *
  * @author Andres

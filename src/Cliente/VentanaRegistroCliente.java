@@ -2,21 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package trabajofinal;
+package Cliente;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import General.Ventana;
 
 /**
  *
  * @author Andres
  */
-public class ventanaRegistro extends javax.swing.JFrame {
+public class VentanaRegistroCliente extends javax.swing.JFrame {
     
     /**
      * Creates new form ventanaRegistro
      */
-    public ventanaRegistro() {
+    public VentanaRegistroCliente() {
         initComponents();
     }
 
@@ -54,7 +55,6 @@ public class ventanaRegistro extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Contraseña");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, 280, 60));
 
@@ -62,7 +62,6 @@ public class ventanaRegistro extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 1100, 70));
 
-        usuarioField.setBackground(new java.awt.Color(255, 255, 255));
         usuarioField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         usuarioField.setText("Ingrese su nombre de usuario");
         usuarioField.setBorder(null);
@@ -78,7 +77,6 @@ public class ventanaRegistro extends javax.swing.JFrame {
         });
         jPanel1.add(usuarioField, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 380, -1));
 
-        contrasenaField.setBackground(new java.awt.Color(255, 255, 255));
         contrasenaField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         contrasenaField.setText("Ingrese su contraseña");
         contrasenaField.setBorder(null);
@@ -94,7 +92,6 @@ public class ventanaRegistro extends javax.swing.JFrame {
         });
         jPanel1.add(contrasenaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 380, -1));
 
-        nombreCompletoField.setBackground(new java.awt.Color(255, 255, 255));
         nombreCompletoField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         nombreCompletoField.setText("Ingrese su nombre completo");
         nombreCompletoField.setBorder(null);
@@ -110,7 +107,6 @@ public class ventanaRegistro extends javax.swing.JFrame {
         });
         jPanel1.add(nombreCompletoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 380, -1));
 
-        edadField.setBackground(new java.awt.Color(255, 255, 255));
         edadField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         edadField.setText("Ingrese su edad");
         edadField.setBorder(null);
@@ -143,28 +139,23 @@ public class ventanaRegistro extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Britannic Bold", 1, 48)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Registro");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 200, 60));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Edad:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 70, 60));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText(" Nombre de usuario:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 280, 60));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nombre completo:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 280, 60));
 
         administradorCheckBox.setBackground(new java.awt.Color(255, 255, 255));
         administradorCheckBox.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        administradorCheckBox.setForeground(new java.awt.Color(0, 0, 0));
         administradorCheckBox.setText("Administrador");
         administradorCheckBox.setActionCommand(" Administrador");
         administradorCheckBox.addActionListener(new java.awt.event.ActionListener() {
@@ -239,50 +230,6 @@ public class ventanaRegistro extends javax.swing.JFrame {
     private void registraseBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registraseBotonActionPerformed
         // TODO add your handling code here:
         
-        if(administradorCheckBox.isEnabled())
-        {
-            Administrador administrador=new Administrador();
-            administrador.setNombreUsuario(usuarioField.getText());
-            administrador.setContrasena(contrasenaField.getText());
-            administrador.setNombreCompleto(nombreCompletoField.getText());
-            administrador.setEdad(edadField.getText());
-            try 
-            {
-                FileWriter escritura = new FileWriter("Registro.txt",true); 
-                escritura.append(administrador.getNombreUsuario()+","+administrador.getContrasena()+","
-                +administrador.getNombreCompleto()+","+administrador.getEdad()+"\n");
-                escritura.close();
-            }
-            catch(IOException e)
-            {
-                System.out.println(e);
-            }
-            setVisible(false);
-            Ventana ventana=new Ventana();
-            ventana.setVisible(true);
-        }
-        else
-        {
-           Cliente cliente=new Cliente();
-            cliente.setNombreUsuario(usuarioField.getText());
-            cliente.setContrasena(contrasenaField.getText());
-            cliente.setNombreCompleto(nombreCompletoField.getText());
-            cliente.setEdad(edadField.getText());
-            try 
-            {
-            FileWriter escritura = new FileWriter("Registro.txt",true); 
-            escritura.append(cliente.getNombreUsuario()+","+cliente.getContrasena()+","
-            +cliente.getNombreCompleto()+","+cliente.getEdad()+"\n");
-            escritura.close();
-            }
-            catch(IOException e)
-            {
-                System.out.println(e);
-            }
-            setVisible(false);
-            Ventana ventana=new Ventana();
-            ventana.setVisible(true);
-        }
     }//GEN-LAST:event_registraseBotonActionPerformed
 
     private void administradorCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_administradorCheckBoxActionPerformed
@@ -306,20 +253,21 @@ public class ventanaRegistro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ventanaRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ventanaRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ventanaRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ventanaRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ventanaRegistro().setVisible(true);
+                new VentanaRegistroCliente().setVisible(true);
             }
         });
     }
