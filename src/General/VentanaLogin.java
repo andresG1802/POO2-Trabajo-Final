@@ -5,6 +5,7 @@
 package General;
 
 import Cliente.VentanaRegistroCliente;
+import Cliente.VentanaRegistroClienteAndres;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -38,7 +39,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         usuarioField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -72,16 +72,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Britannic Bold", 1, 48)); // NOI18N
         jLabel2.setText("INICIAR SESION");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, 60));
-
-        jCheckBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jCheckBox2.setText("Administrador");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 510, 130, 30));
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -125,7 +115,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonRegistrarseActionPerformed(evt);
             }
         });
-        jPanel3.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 660, 160, 50));
+        jPanel3.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 540, 160, 50));
 
         botonIniciarSesion1.setBackground(new java.awt.Color(0, 153, 153));
         botonIniciarSesion1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -136,11 +126,11 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonIniciarSesion1ActionPerformed(evt);
             }
         });
-        jPanel3.add(botonIniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, 160, 50));
+        jPanel3.add(botonIniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 160, 50));
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setText(" Nombre de usuario:");
+        jLabel5.setText(" Dni:");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 260, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,10 +146,6 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void usuarioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioFieldActionPerformed
         // TODO add your handling code here:
@@ -183,8 +169,10 @@ public class VentanaLogin extends javax.swing.JFrame {
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        VentanaRegistroCliente ventanaregistro=new VentanaRegistroCliente();
-        ventanaregistro.setVisible(true);
+        //VentanaRegistroClienteAndres ventanaregistro=new VentanaRegistroClienteAndres();
+        //ventanaregistro.setVisible(true);
+        VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
+        ventanaRegistroCliente.setVisible(true);
     }//GEN-LAST:event_botonRegistrarseActionPerformed
 
     private void botonIniciarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesion1ActionPerformed
@@ -192,9 +180,13 @@ public class VentanaLogin extends javax.swing.JFrame {
         String usuario=usuarioField.getText(),
                 contrasena=contraField.getText();
        
-        if(login(usuario,contrasena))
+        if(login(usuario,contrasena) == "Cliente")
         {
-            JOptionPane.showMessageDialog(null,"Iniciado correctamente");
+            JOptionPane.showMessageDialog(null,"Iniciado correctamente como cliente");
+        }
+        else if (login(usuario,contrasena) == "Trabajador")
+        {
+            JOptionPane.showMessageDialog(null,"Iniciado correctamente como trabajador");
         }
         else
         {
@@ -237,23 +229,26 @@ public class VentanaLogin extends javax.swing.JFrame {
             }
         });
     }
-    public boolean login(String usuario,String contrasena)
+    public String login(String usuario,String contrasena)
     {
-        boolean autenticacion = false;
+        String autenticacion = "Error";
         
         PreparedStatement st;
         ResultSet rs;
         try {
-            st = cn.con.prepareStatement("select * from usuario where nickUsuario=? and "
+            st = cn.con.prepareStatement("select * from usuario where dni_usuario=? and "
                     + "contraseña=?");
             st.setString(1,usuario);
             st.setString(2, contrasena);
             rs=st.executeQuery();
-            cn.con.close();
-            if (rs != null)
+            rs.next();
+            if ("Cliente".equals(rs.getString("tipo")))
             {
-                autenticacion=true;
-                return autenticacion; 
+                autenticacion = "Cliente";
+            }
+            else
+            {
+                autenticacion = "Trabajador";
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -265,7 +260,6 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JButton botonIniciarSesion1;
     private javax.swing.JButton botonRegistrarse;
     private javax.swing.JTextField contraField;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

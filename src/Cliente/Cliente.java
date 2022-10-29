@@ -11,5 +11,12 @@ import General.Usuario;
  * @author julianquispe
  */
 public class Cliente extends Usuario {
+
+    public Cliente() {
+    }
+
+    public Cliente(int id, String usuario, String contrasena, String dni, String nombres, String apellidos, String fechaNac, String sexo, String correo, String direccion, String distrito) {
+        super(id, usuario, contrasena, dni, nombres, apellidos, fechaNac, sexo, correo, direccion, distrito);
+    }
     
 }
