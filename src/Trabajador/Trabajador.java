@@ -18,8 +18,8 @@ public class Trabajador extends Usuario {
     public Trabajador(){}
 
 
-    public Trabajador(int numHijos, double sueldo, String sistPension, String seguroSalud, String fechaIngreso, int id, String usuario, String contrasena, String dni, String nombres, String apellidos, String fechaNac, String sexo, String correo, String direccion, String distrito) {
-        super(id, usuario, contrasena, dni, nombres, apellidos, fechaNac, sexo, correo, direccion, distrito);
+    public Trabajador(int numHijos, double sueldo, String sistPension, String seguroSalud, String fechaIngreso, int id, String contrasena, String dni, String nombres, String apellidos, String fechaNac, String sexo, String correo, String direccion) {
+        super(id, contrasena, dni, nombres, apellidos, fechaNac, sexo, correo, direccion);
         this.numHijos = numHijos;
         this.sueldo = sueldo;
         this.sistPension = sistPension;
