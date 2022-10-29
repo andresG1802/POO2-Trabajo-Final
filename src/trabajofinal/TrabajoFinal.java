@@ -4,8 +4,10 @@
  */
 package trabajofinal;
 
+import Cliente.Cliente;
 import General.Conexion;
 import General.VentanaLogin;
+import Trabajador.Trabajador;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -15,6 +17,8 @@ import java.sql.Statement;
  */
 public class TrabajoFinal {
     public static Conexion cn = new Conexion();
+    public static Cliente cliente = new Cliente();
+    public static Trabajador trabajador = new Trabajador();
 
     /**
      * @param args the command line arguments

@@ -4,14 +4,19 @@
  */
 package General;
 
+import Cliente.InicioCliente;
 import Cliente.VentanaRegistroCliente;
 import Cliente.VentanaRegistroClienteAndres;
+import Trabajador.InicioTrabajador;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import static trabajofinal.TrabajoFinal.cn;
+import static trabajofinal.TrabajoFinal.cliente;
+import Cliente.Cliente;
+
 
 /**
  *
@@ -183,13 +188,22 @@ public class VentanaLogin extends javax.swing.JFrame {
         String usuario=usuarioField.getText(),
                 contrasena=contraField.getText();
        
+        PreparedStatement st;
+        ResultSet rs;
         if(login(usuario,contrasena) == "Cliente")
         {
-            JOptionPane.showMessageDialog(null,"Iniciado correctamente como cliente");
+         
+            InicioCliente ventanaInicioCliente = new InicioCliente();
+            setVisible(false);
+            ventanaInicioCliente.setVisible(true);
+            
         }
         else if (login(usuario,contrasena) == "Trabajador")
         {
             JOptionPane.showMessageDialog(null,"Iniciado correctamente como trabajador");
+            InicioTrabajador ventanaInicioTrabajador = new InicioTrabajador();
+            setVisible(false);
+            ventanaInicioTrabajador.setVisible(true);
         }
         else
         {
@@ -247,10 +261,46 @@ public class VentanaLogin extends javax.swing.JFrame {
             rs.next();
             if ("Cliente".equals(rs.getString("tipo")))
             {
+                try {
+                st = cn.con.prepareStatement("select * from cliente where dni_cliente=?");
+                st.setString(1,usuario);
+                rs=st.executeQuery();
+                rs.next();
+                int id = rs.getInt("id_cliente");
+                String nombres = rs.getString("nombre_cliente");
+                String apellidos = rs.getString("apellido_cliente");
+                String fechaNac = rs.getString("fecha_nac_cliente");
+                String sexo = rs.getString("sexo_cliente");
+                String correo = rs.getString("correo_cliente");
+                String direccion = rs.getString("direccion_cliente");                
+                cliente = new Cliente(id, contrasena,  usuario, 
+                         nombres,  apellidos,  fechaNac, 
+                         sexo,  correo,  direccion);
+            } catch (Exception e) {
+                System.out.println(e);
+            }   
                 autenticacion = "Cliente";
             }
             else
             {
+                 try {
+                st = cn.con.prepareStatement("select * from trabajador where dni_trabajador=?");
+                st.setString(1,usuario);
+                rs=st.executeQuery();
+                rs.next();
+                int id = rs.getInt("id_cliente");
+                String nombres = rs.getString("nombres_cliente");
+                String apellidos = rs.getString("apellidos_cliente");
+                String fechaNac = rs.getString("fecha_nac_cliente");
+                String sexo = rs.getString("sexo_cliente");
+                String correo = rs.getString("correo_cliente");
+                String direccion = rs.getString("direccion_cliente");                
+                cliente = new Cliente(id, contrasena,  usuario, 
+                         nombres,  apellidos,  fechaNac, 
+                         sexo,  correo,  direccion);
+            } catch (Exception e) {
+                System.out.println(e);
+            } 
                 autenticacion = "Trabajador";
             }
         } catch (Exception e) {

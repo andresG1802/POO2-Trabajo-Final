@@ -10,13 +10,12 @@ package General;
  */
 public class Usuario {
     int id;
-    String usuario, contrasena, dni, nombres, apellidos, fechaNac, sexo, correo, direccion, distrito;
+    String contrasena, dni, nombres, apellidos, fechaNac, sexo, correo, direccion;
     
     public Usuario(){}
 
-    public Usuario(int id, String usuario, String contrasena, String dni, String nombres, String apellidos, String fechaNac, String sexo, String correo, String direccion, String distrito) {
+    public Usuario(int id, String contrasena, String dni, String nombres, String apellidos, String fechaNac, String sexo, String correo, String direccion) {
         this.id = id;
-        this.usuario = usuario;
         this.contrasena = contrasena;
         this.dni = dni;
         this.nombres = nombres;
@@ -25,7 +24,6 @@ public class Usuario {
         this.sexo = sexo;
         this.correo = correo;
         this.direccion = direccion;
-        this.distrito = distrito;
     }
 
     public int getId() {
@@ -36,13 +34,6 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
 
     public String getContrasena() {
         return contrasena;
@@ -108,13 +99,5 @@ public class Usuario {
         this.direccion = direccion;
     }
 
-    public String getDistrito() {
-        return distrito;
-    }
-
-    public void setDistrito(String distrito) {
-        this.distrito = distrito;
-    }
-    
     
 }
