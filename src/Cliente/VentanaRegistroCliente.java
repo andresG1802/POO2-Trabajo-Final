@@ -55,7 +55,7 @@ public class VentanaRegistroCliente extends javax.swing.JFrame {
         ArrayList<String> paises = new ArrayList<String>();
         paises.add("Seleccionar");
         try {
-            st = cn.con.prepareStatement("select * from departamentos where idPais = ?");
+            st = cn.con.prepareStatement("select * from departamento where pais = ?");
             st.setString(1, Integer.toString(id));
             rs=st.executeQuery();
             while (rs.next())
@@ -75,7 +75,7 @@ public class VentanaRegistroCliente extends javax.swing.JFrame {
         ArrayList<String> paises = new ArrayList<String>();
         paises.add("Seleccionar");
         try {
-            st = cn.con.prepareStatement("select * from distrito where idProvincia = ?");
+            st = cn.con.prepareStatement("select * from distrito where departamento = ?");
             st.setString(1, Integer.toString(id));
             rs=st.executeQuery();
             while (rs.next())
@@ -415,12 +415,12 @@ public class VentanaRegistroCliente extends javax.swing.JFrame {
             String distrito = distritoField.getSelectedItem().toString();
             int idDistrito = 0;
             try {
-                st = cn.con.prepareStatement("select idDistrito from distrito where distrito = ?");
+                st = cn.con.prepareStatement("select id_distrito from distrito where distrito = ?");
                 st.setString(1, distrito);
                 rs=st.executeQuery();
                 while(rs.next())
                 {
-                   idDistrito = rs.getInt("idDistrito");
+                   idDistrito = rs.getInt("id_distrito");
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -475,12 +475,12 @@ public class VentanaRegistroCliente extends javax.swing.JFrame {
         PreparedStatement st;
         ResultSet rs;
         try {
-            st = cn.con.prepareStatement("select idPais from pais where pais = ?");
+            st = cn.con.prepareStatement("select id_pais from pais where pais = ?");
             st.setString(1, pais);
             rs=st.executeQuery();
             while(rs.next())
             {
-               id = rs.getInt("idPais");
+               id = rs.getInt("id_pais");
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -499,12 +499,12 @@ public class VentanaRegistroCliente extends javax.swing.JFrame {
         PreparedStatement st;
         ResultSet rs;
         try {
-            st = cn.con.prepareStatement("select idDepartamento from departamentos where departamento = ?");
+            st = cn.con.prepareStatement("select id_departamento from departamento where departamento = ?");
             st.setString(1, provincia);
             rs=st.executeQuery();
             while(rs.next())
             {
-               id = rs.getInt("idDepartamento");
+               id = rs.getInt("id_departamento");
             }
         } catch (Exception e) {
             System.out.println(e);
