@@ -15,7 +15,10 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import static trabajofinal.TrabajoFinal.cn;
 import static trabajofinal.TrabajoFinal.cliente;
+import static trabajofinal.TrabajoFinal.trabajador;
+
 import Cliente.Cliente;
+import Trabajador.Trabajador;
 
 
 /**
@@ -48,11 +51,11 @@ public class VentanaLogin extends javax.swing.JFrame {
         usuarioField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        contraField = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonRegistrarse = new javax.swing.JButton();
         botonIniciarSesion1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -84,7 +87,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 260, 30));
 
         usuarioField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        usuarioField.setText("Ingrese su nombre de usuario");
+        usuarioField.setText("Ingrese su documento");
         usuarioField.setBorder(null);
         usuarioField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -99,16 +102,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel3.add(usuarioField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 380, -1));
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 432, 350, 0));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 330, 30));
-
-        contraField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        contraField.setText("Ingrese su contraseña");
-        contraField.setBorder(null);
-        contraField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                contraFieldMousePressed(evt);
-            }
-        });
-        jPanel3.add(contraField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 380, -1));
         jPanel3.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 330, 30));
 
         botonRegistrarse.setBackground(new java.awt.Color(0, 153, 153));
@@ -135,8 +128,17 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setText(" Dni:");
+        jLabel5.setText("DNI");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 260, 30));
+
+        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.setBorder(null);
+        jPasswordField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPasswordField1MousePressed(evt);
+            }
+        });
+        jPanel3.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 260, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,13 +169,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_usuarioFieldMousePressed
 
-    private void contraFieldMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contraFieldMousePressed
-        // TODO add your handling code here:
-        
-        contraField.setText("");
-        
-    }//GEN-LAST:event_contraFieldMousePressed
-
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
         // TODO add your handling code here:
         setVisible(false);
@@ -186,7 +181,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     private void botonIniciarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesion1ActionPerformed
         // TODO add your handling code here:
         String usuario=usuarioField.getText(),
-                contrasena=contraField.getText();
+                contrasena=jPasswordField1.getText();
        
         PreparedStatement st;
         ResultSet rs;
@@ -200,16 +195,20 @@ public class VentanaLogin extends javax.swing.JFrame {
         }
         else if (login(usuario,contrasena) == "Trabajador")
         {
-            JOptionPane.showMessageDialog(null,"Iniciado correctamente como trabajador");
             InicioTrabajador ventanaInicioTrabajador = new InicioTrabajador();
             setVisible(false);
             ventanaInicioTrabajador.setVisible(true);
         }
         else
         {
-           JOptionPane.showMessageDialog(null,"Por favor vuelva a digitar su nombre de usuario"); 
+           JOptionPane.showMessageDialog(null,"Por favor vuelva a digitar sus credenciales"); 
         }
     }//GEN-LAST:event_botonIniciarSesion1ActionPerformed
+
+    private void jPasswordField1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField1MousePressed
+
+        jPasswordField1.setText("");        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1MousePressed
 
     /**
      * @param args the command line arguments
@@ -284,20 +283,27 @@ public class VentanaLogin extends javax.swing.JFrame {
             else
             {
                  try {
-                st = cn.con.prepareStatement("select * from trabajador where dni_trabajador=?");
+                st = cn.con.prepareStatement("select * from trabajador join sistema_pension on "
+                        + "trabajador.sist_pension_trabajador = sistema_pension.id_sistema join seguro_salud on "
+                        + "trabajador.seguro_salud_trabajador = seguro_salud.id_seguro where dni_trabajador=?");
                 st.setString(1,usuario);
                 rs=st.executeQuery();
                 rs.next();
-                int id = rs.getInt("id_cliente");
-                String nombres = rs.getString("nombres_cliente");
-                String apellidos = rs.getString("apellidos_cliente");
-                String fechaNac = rs.getString("fecha_nac_cliente");
-                String sexo = rs.getString("sexo_cliente");
-                String correo = rs.getString("correo_cliente");
-                String direccion = rs.getString("direccion_cliente");                
-                cliente = new Cliente(id, contrasena,  usuario, 
-                         nombres,  apellidos,  fechaNac, 
-                         sexo,  correo,  direccion);
+                int id = rs.getInt("id_trabajador");
+                String nombres = rs.getString("nombre_trabajador");
+                String apellidos = rs.getString("apellido_trabajador");
+                String fechaNac = rs.getString("fecha_nac_trabajador");
+                String sexo = rs.getString("sexo_trabajador");
+                String correo = rs.getString("correo_trabajador");
+                String direccion = rs.getString("direccion_trabajador");     
+                Double sueldo = rs.getDouble("sueldo_trabajador");
+                String sistPension = rs.getString("sistema");
+                String seguroSalud = rs.getString("seguro");
+                String fechaIngreso = rs.getString("fecha_ingreso_trabajador");
+                int hijos = rs.getInt("hijos_trabajador");
+                trabajador = new Trabajador( hijos, sueldo, sistPension, seguroSalud, 
+                        fechaIngreso, id, contrasena, usuario,  nombres, 
+                         apellidos,  fechaNac,  sexo,  correo,  direccion);
             } catch (Exception e) {
                 System.out.println(e);
             } 
@@ -312,13 +318,13 @@ public class VentanaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonIniciarSesion1;
     private javax.swing.JButton botonRegistrarse;
-    private javax.swing.JTextField contraField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

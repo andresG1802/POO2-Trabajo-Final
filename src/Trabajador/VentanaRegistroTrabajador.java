@@ -25,7 +25,50 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
      */
     public VentanaRegistroTrabajador() {
         initComponents();
+        llenarPaises();
+        llenarSistema();
+        llenarSeguro();
     }
+    
+    public void llenarSistema(){
+        PreparedStatement st;
+        ResultSet rs;
+        ArrayList<String> sistemas = new ArrayList<String>();
+        sistemas.add("Seleccionar");
+        try {
+            st = cn.con.prepareStatement("select * from sistema_pension");
+            rs=st.executeQuery();
+            while (rs.next())
+            {
+                sistemas.add(rs.getString("sistema"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel<>(sistemas.toArray());
+        sistemaPensionField.setModel(modelo);
+    }
+    
+        
+    public void llenarSeguro(){
+        PreparedStatement st;
+        ResultSet rs;
+        ArrayList<String> seguros = new ArrayList<String>();
+        seguros.add("Seleccionar");
+        try {
+            st = cn.con.prepareStatement("select * from seguro_salud");
+            rs=st.executeQuery();
+            while (rs.next())
+            {
+                seguros.add(rs.getString("seguro"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel<>(seguros.toArray());
+        seguroSaludField.setModel(modelo);
+    }
+    
     public void llenarPaises(){
         PreparedStatement st;
         ResultSet rs;
@@ -51,7 +94,7 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
         ArrayList<String> paises = new ArrayList<String>();
         paises.add("Seleccionar");
         try {
-            st = cn.con.prepareStatement("select * from departamentos where idPais = ?");
+            st = cn.con.prepareStatement("select * from departamento where pais = ?");
             st.setString(1, Integer.toString(id));
             rs=st.executeQuery();
             while (rs.next())
@@ -71,7 +114,7 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
         ArrayList<String> paises = new ArrayList<String>();
         paises.add("Seleccionar");
         try {
-            st = cn.con.prepareStatement("select * from distrito where idProvincia = ?");
+            st = cn.con.prepareStatement("select * from distrito where departamento = ?");
             st.setString(1, Integer.toString(id));
             rs=st.executeQuery();
             while (rs.next())
@@ -128,8 +171,8 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
         hijosField = new javax.swing.JSpinner();
         seguroSaludField = new javax.swing.JComboBox<>();
         sistemaPensionField = new javax.swing.JComboBox<>();
-        fechaNacField = new com.toedter.calendar.JDateChooser();
         fechaIngreField = new com.toedter.calendar.JDateChooser();
+        fechaNacField = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,12 +299,16 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(409, 409, 409)
+                                .addComponent(jLabel13)))
+                        .addGap(337, 337, 337))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -273,33 +320,26 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                                         .addComponent(jLabel5)
                                         .addComponent(apellidosField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(226, 226, 226)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel7)
+                                    .addComponent(direccionField)
                                     .addComponent(contrasenaField)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel7)
-                                            .addComponent(correoField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(direccionField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(409, 409, 409)
-                                        .addComponent(jLabel13))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(434, 434, 434)
-                                        .addComponent(fechaNacField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(347, Short.MAX_VALUE))
+                                    .addComponent(correoField)
+                                    .addComponent(fechaNacField, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)))
+                            .addComponent(masculinoButton)
+                            .addComponent(nombresField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(288, 288, 288)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(paisField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(masculinoButton)
-                            .addComponent(nombresField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -310,30 +350,37 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(sueldoField, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel14)
-                                            .addComponent(sistemaPensionField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(volverButton))
-                                        .addGap(18, 18, 18)
+                                            .addComponent(sistemaPensionField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel16)
-                                            .addComponent(fechaIngreField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(seguroSaludField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(registroButton))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel16)
+                                                    .addComponent(seguroSaludField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(29, 29, 29)
+                                                .addComponent(fechaIngreField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(71, 71, 71)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(hijosField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel17))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(143, 143, 143)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(provinciaField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(72, 72, 72)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(distritoField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jLabel17)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(143, 143, 143)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(provinciaField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(72, 72, 72)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(distritoField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(265, 265, 265)
+                .addComponent(volverButton)
+                .addGap(85, 85, 85)
+                .addComponent(registroButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,9 +418,9 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fechaNacField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(masculinoButton)
                     .addComponent(femeninoButton))
@@ -392,15 +439,16 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel15)
                     .addComponent(jLabel17))
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sueldoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(hijosField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel14))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addComponent(fechaIngreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16)))
@@ -408,11 +456,11 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seguroSaludField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sistemaPensionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(volverButton)
                     .addComponent(registroButton))
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -428,12 +476,12 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
         PreparedStatement st;
         ResultSet rs;
         try {
-            st = cn.con.prepareStatement("select idPais from pais where pais = ?");
+            st = cn.con.prepareStatement("select id_pais from pais where pais = ?");
             st.setString(1, pais);
             rs=st.executeQuery();
             while(rs.next())
             {
-                id = rs.getInt("idPais");
+               id = rs.getInt("id_pais");
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -448,12 +496,12 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
         PreparedStatement st;
         ResultSet rs;
         try {
-            st = cn.con.prepareStatement("select idDepartamento from departamentos where departamento = ?");
+            st = cn.con.prepareStatement("select id_departamento from departamento where departamento = ?");
             st.setString(1, provincia);
             rs=st.executeQuery();
             while(rs.next())
             {
-                id = rs.getInt("idDepartamento");
+               id = rs.getInt("id_departamento");
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -477,7 +525,10 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
             String contrasena = contrasenaField.getText();
             String direccion = direccionField.getText();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String fechaNac = sdf.format(fechaIngreField.getDate());
+            String fechaNac = sdf.format(fechaNacField.getDate());
+            String fechaIngre = sdf.format(fechaIngreField.getDate());
+            Double sueldo = Double.parseDouble(sueldoField.getText());
+            int hijos = (Integer) hijosField.getValue();
             String sexo;
             if (masculinoButton.isSelected())
             {
@@ -490,14 +541,40 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
             String pais = paisField.getSelectedItem().toString();
             String provincia = provinciaField.getSelectedItem().toString();
             String distrito = distritoField.getSelectedItem().toString();
+            String sistema = sistemaPensionField.getSelectedItem().toString();
+            String seguro = seguroSaludField.getSelectedItem().toString();
             int idDistrito = 0;
+            int idSistema = 0;
+            int idSeguro = 0;
             try {
-                st = cn.con.prepareStatement("select idDistrito from distrito where distrito = ?");
+                st = cn.con.prepareStatement("select id_distrito from distrito where distrito = ?");
                 st.setString(1, distrito);
                 rs=st.executeQuery();
                 while(rs.next())
                 {
-                    idDistrito = rs.getInt("idDistrito");
+                   idDistrito = rs.getInt("id_distrito");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            try {
+                st = cn.con.prepareStatement("select id_sistema from sistema_salud where sistema = ?");
+                st.setString(1, sistema);
+                rs=st.executeQuery();
+                while(rs.next())
+                {
+                   idSistema = rs.getInt("id_sistema");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+                                    try {
+                st = cn.con.prepareStatement("select id_seguro from seguro_salud where seguro = ?");
+                st.setString(1, seguro);
+                rs=st.executeQuery();
+                while(rs.next())
+                {
+                   idSeguro = rs.getInt("id_seguro");
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -507,42 +584,49 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                 st = cn.con.prepareStatement("insert into usuario(dni_usuario, contraseña, tipo) values (?,?,?)");
                 st.setString(1, dni);
                 st.setString(2, contrasena);
-                st.setString(3,"Cliente");
+                st.setString(3,"Trabajador");
                 st.executeUpdate();
                 cn.con.commit();
-                st = cn.con.prepareStatement("insert into cliente(dni_cliente, nombre_cliente,"
-                    + "apellido_cliente, fecha_nac_cliente, sexo_cliente, correo_cliente, direccion_cliente,"
-                    + "distrito_cliente) values (?,?,?,?,?,?,?,?)");
+                st = cn.con.prepareStatement("insert into trabajador(dni_trabajador, nombre_trabajador,"
+                        + "apellido_trabajador, fecha_nac_trabajador, sexo_trabajador, correo_trabajador, direccion_trabajador,"
+                        + "distrito_trabajador, sueldo_trabajador, sist_pension_trabajador, fecha_ingreso_trabajador, hijos_trabajador, "
+                        + "seguro_salud_trabajador ) values (?,?,?,?,?,?,?,?, ?, ?, ?, ?, ?)");
                 st.setString(1, dni);
                 st.setString(2, nombres);
                 st.setString(3, apellidos);
-                st.setString(4, fechaNac);
+                st.setString(4, fechaNac);                
                 st.setString(5, sexo);
-                st.setString(6, correo);
+                st.setString(6, correo);                
                 st.setString(7, direccion);
                 st.setString(8, Integer.toString(idDistrito));
+                st.setString(9, Double.toString(sueldo));
+                st.setString(10, Integer.toString(idSistema));
+                st.setString(11, fechaIngre);
+                st.setString(12, Integer.toString(hijos));
+                st.setString(13, Integer.toString(idSeguro));
                 st.executeUpdate();
                 cn.con.commit();
                 setVisible(false);
                 JOptionPane.showMessageDialog(null,"Registrado correctamente");
-                VentanaLogin ventanaLogin = new VentanaLogin();
-                ventanaLogin.setVisible(true);
-
+                InicioTrabajador inicioTrabajador = new InicioTrabajador();
+                inicioTrabajador.setVisible(true);
+                
             } catch (Exception e) {
                 System.out.println(e);
             }
 
+            
         }
         else
         {
             JOptionPane.showMessageDialog(null,"Complete todos los campos");
-        }// TODO add your handling code here:
+        }
     }//GEN-LAST:event_registroButtonActionPerformed
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         setVisible(false);
-        VentanaLogin ventanaLogin = new VentanaLogin();
-        ventanaLogin.setVisible(true);// TODO add your handling code here:
+        InicioTrabajador ventanaInicioTrabajador = new InicioTrabajador();
+        ventanaInicioTrabajador.setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_volverButtonActionPerformed
 
     private void direccionFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionFieldActionPerformed

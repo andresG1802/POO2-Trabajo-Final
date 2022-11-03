@@ -2,26 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Cliente;
+package Trabajador;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import static trabajofinal.TrabajoFinal.cn;
 import javax.swing.table.DefaultTableModel;
+import static trabajofinal.TrabajoFinal.cn;
 
 /**
  *
  * @author julianquispe
  */
-public class ListadoProductos extends javax.swing.JFrame {
+public class ListadoProductosTrabajador extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListadoProductos
+     * Creates new form ListadoProductosTrabajador
      */
-    public ListadoProductos() {
+    public ListadoProductosTrabajador() {
         initComponents();
         listar();
     }
+    
     public void listar(){
                             PreparedStatement st;
             ResultSet rs;
@@ -49,29 +51,15 @@ public class ListadoProductos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         buscarField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Volver");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Ver productos");
 
@@ -90,6 +78,20 @@ public class ListadoProductos extends javax.swing.JFrame {
         buscarField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarFieldActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -118,7 +120,7 @@ public class ListadoProductos extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(291, 291, 291)
                         .addComponent(jButton2)))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,52 +146,53 @@ public class ListadoProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String buscar = buscarField.getText();
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        model.setRowCount(0);
-        PreparedStatement st;
-        ResultSet rs;
-        boolean resultado = false;
-
-        try {
-            st = cn.con.prepareStatement("select * from producto where id_producto = ?");
-            st.setString(1, buscar);
-            rs=st.executeQuery();
-            while(rs.next())
-            {
-                if (rs.getInt("id_producto") == Integer.parseInt(buscar))
-                {
-                    resultado = true;
-                    Object[] row = { rs.getString("id_producto") ,rs.getString("nombre_producto"),
-                        rs.getString("color_producto"), rs.getString("tamaño_producto"),
-                        rs.getString("unidades_producto"), rs.getString("stock_producto"),
-                        rs.getString("costo_producto"), rs.getString("precio_producto")};
-                    model.addRow(row);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        if (!resultado)
-        {
-            JOptionPane.showMessageDialog(null,"No se encontró producto");
-
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        setVisible(false);
-        InicioCliente inicioCliente = new InicioCliente();
-        inicioCliente.setVisible(true);        // TODO add your handling code here:
+                     setVisible(false);     
+            InicioTrabajador inicioTrabajador = new InicioTrabajador();
+                inicioTrabajador.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void buscarFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarFieldActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+           String buscar = buscarField.getText();
+                               DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+model.setRowCount(0);
+            PreparedStatement st;
+            ResultSet rs;
+                            boolean resultado = false;
+
+            try {
+                st = cn.con.prepareStatement("select * from producto where id_producto = ?");
+                st.setString(1, buscar);
+                rs=st.executeQuery();
+                while(rs.next())
+                {
+                    if (rs.getInt("id_producto") == Integer.parseInt(buscar))
+                    {
+                        resultado = true;
+                        Object[] row = { rs.getString("id_producto") ,rs.getString("nombre_producto"), 
+                        rs.getString("color_producto"), rs.getString("tamaño_producto"), 
+                        rs.getString("unidades_producto"), rs.getString("stock_producto"), 
+                        rs.getString("costo_producto"), rs.getString("precio_producto")};
+                    model.addRow(row);  
+                    }
+              }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            if (!resultado)
+            {
+                    JOptionPane.showMessageDialog(null,"No se encontró producto"); 
+
+            }
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,20 +211,20 @@ public class ListadoProductos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductosTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductosTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductosTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductosTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListadoProductos().setVisible(true);
+                new ListadoProductosTrabajador().setVisible(true);
             }
         });
     }
