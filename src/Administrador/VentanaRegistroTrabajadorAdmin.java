@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Trabajador;
+package Administrador;
 import General.VentanaLogin;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,12 +18,12 @@ import static trabajofinal.TrabajoFinal.cn;
  *
  * @author user
  */
-public class VentanaRegistroTrabajador extends javax.swing.JFrame {
+public class VentanaRegistroTrabajadorAdmin extends javax.swing.JFrame {
 
     /**
      * Creates new form VentanaRegistroTrabajador
      */
-    public VentanaRegistroTrabajador() {
+    public VentanaRegistroTrabajadorAdmin() {
         initComponents();
         llenarPaises();
         llenarSistema();
@@ -608,7 +608,7 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                 cn.con.commit();
                 setVisible(false);
                 JOptionPane.showMessageDialog(null,"Registrado correctamente");
-                InicioTrabajador inicioTrabajador = new InicioTrabajador();
+                InicioAdmin inicioTrabajador = new InicioAdmin();
                 inicioTrabajador.setVisible(true);
                 
             } catch (Exception e) {
@@ -625,7 +625,7 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         setVisible(false);
-        InicioTrabajador ventanaInicioTrabajador = new InicioTrabajador();
+        InicioAdmin ventanaInicioTrabajador = new InicioAdmin();
         ventanaInicioTrabajador.setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_volverButtonActionPerformed
 
@@ -715,20 +715,21 @@ public class VentanaRegistroTrabajador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistroTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroTrabajadorAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistroTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroTrabajadorAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistroTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroTrabajadorAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistroTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistroTrabajadorAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistroTrabajador().setVisible(true);
+                new VentanaRegistroTrabajadorAdmin().setVisible(true);
             }
         });
     }

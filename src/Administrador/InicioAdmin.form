@@ -77,7 +77,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Bienvenido trabajador, &quot; + trabajador.getNombres()" type="code"/>
+          <Connection code="&quot;Bienvenido administrador, &quot; + admin.getNombres()" type="code"/>
         </Property>
       </Properties>
     </Component>

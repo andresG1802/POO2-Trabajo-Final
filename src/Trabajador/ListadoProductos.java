@@ -4,6 +4,7 @@
  */
 package Trabajador;
 
+import Administrador.InicioAdmin;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -14,36 +15,34 @@ import static trabajofinal.TrabajoFinal.cn;
  *
  * @author julianquispe
  */
-public class ListadoTrabajadores extends javax.swing.JFrame {
+public class ListadoProductos extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListadoTrabajadores
+     * Creates new form ListadoProductosTrabajador
      */
-    public ListadoTrabajadores() {
+    public ListadoProductos() {
         initComponents();
         listar();
     }
     
     public void listar(){
-                
-                    PreparedStatement st;
+                            PreparedStatement st;
             ResultSet rs;
             try {
-                st = cn.con.prepareStatement("select * from trabajador");
+                st = cn.con.prepareStatement("select * from producto");
                 rs=st.executeQuery();
                 while(rs.next())
                 {
-                    Object[] row = { rs.getString("dni_trabajador") ,rs.getString("nombre_trabajador"), 
-                        rs.getString("apellido_trabajador"), rs.getString("fecha_nac_trabajador"), 
-                        rs.getString("sexo_trabajador"), rs.getString("correo_trabajador"), 
-                        rs.getString("direccion_trabajador")};
+                    Object[] row = { rs.getString("id_producto") ,rs.getString("nombre_producto"), 
+                        rs.getString("color_producto"), rs.getString("tamaño_producto"), 
+                        rs.getString("unidades_producto"), rs.getString("stock_producto"), 
+                        rs.getString("costo_producto"), rs.getString("precio_producto")};
                     DefaultTableModel model = (DefaultTableModel) tabla.getModel();
                     model.addRow(row);                }
             } catch (Exception e) {
                 System.out.println(e);
             }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,19 +62,25 @@ public class ListadoTrabajadores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Ver trabajadores");
+        jLabel1.setText("Ver productos");
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "DNI", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", "Correo", "Direccion"
+                "id", "nombre", "color", "tamaño", "unidades", "stock", "costo", "precio"
             }
         ));
         jScrollPane1.setViewportView(tabla);
 
         jLabel2.setText("Buscar");
+
+        buscarField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarFieldActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -95,29 +100,28 @@ public class ListadoTrabajadores extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(buscarField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(106, 106, 106)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(57, 57, 57)
+                                .addComponent(buscarField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(jButton1)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(266, 266, 266)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(291, 291, 291)
                         .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +139,7 @@ public class ListadoTrabajadores extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(70, 70, 70))
         );
@@ -144,32 +148,37 @@ public class ListadoTrabajadores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            setVisible(false);     
-            InicioTrabajador inicioTrabajador = new InicioTrabajador();
+
+                     setVisible(false);     
+            InicioAdmin inicioTrabajador = new InicioAdmin();
                 inicioTrabajador.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void buscarFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarFieldActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
            String buscar = buscarField.getText();
-            DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-            model.setRowCount(0);
+                               DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+model.setRowCount(0);
             PreparedStatement st;
             ResultSet rs;
                             boolean resultado = false;
 
             try {
-                st = cn.con.prepareStatement("select * from trabajador where id_trabajador = ?");
+                st = cn.con.prepareStatement("select * from producto where id_producto = ?");
                 st.setString(1, buscar);
                 rs=st.executeQuery();
                 while(rs.next())
                 {
-                    if (rs.getInt("id_trabajador") == Integer.parseInt(buscar))
+                    if (rs.getInt("id_producto") == Integer.parseInt(buscar))
                     {
                         resultado = true;
-                    Object[] row = { rs.getString("dni_trabajador") ,rs.getString("nombre_trabajador"), 
-                        rs.getString("apellido_trabajador"), rs.getString("fecha_nac_trabajador"), 
-                        rs.getString("sexo_trabajador"), rs.getString("correo_trabajador"), 
-                        rs.getString("direccion_trabajador")};
+                        Object[] row = { rs.getString("id_producto") ,rs.getString("nombre_producto"), 
+                        rs.getString("color_producto"), rs.getString("tamaño_producto"), 
+                        rs.getString("unidades_producto"), rs.getString("stock_producto"), 
+                        rs.getString("costo_producto"), rs.getString("precio_producto")};
                     model.addRow(row);  
                     }
               }
@@ -178,9 +187,12 @@ public class ListadoTrabajadores extends javax.swing.JFrame {
             }
             if (!resultado)
             {
-                    JOptionPane.showMessageDialog(null,"No se encontró trabajador"); 
+                    JOptionPane.showMessageDialog(null,"No se encontró producto"); 
 
-            }        // TODO add your handling code here:
+            }
+
+
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -200,20 +212,35 @@ public class ListadoTrabajadores extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListadoTrabajadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListadoTrabajadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListadoTrabajadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListadoTrabajadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListadoTrabajadores().setVisible(true);
+                new ListadoProductos().setVisible(true);
             }
         });
     }

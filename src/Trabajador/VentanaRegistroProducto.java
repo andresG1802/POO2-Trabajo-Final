@@ -4,6 +4,7 @@
  */
 package Trabajador;
 
+import Administrador.InicioAdmin;
 import General.VentanaLogin;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -215,7 +216,7 @@ public class VentanaRegistroProducto extends javax.swing.JFrame {
                 cn.con.commit();
                 setVisible(false);
                 JOptionPane.showMessageDialog(null,"Registrado correctamente");
-                InicioTrabajador inicioTrabajador = new InicioTrabajador();
+                InicioAdmin inicioTrabajador = new InicioAdmin();
                 inicioTrabajador.setVisible(true);
                 
             } catch (Exception e) {
@@ -227,7 +228,7 @@ public class VentanaRegistroProducto extends javax.swing.JFrame {
     private void volverFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverFieldActionPerformed
 
             setVisible(false);     
-            InicioTrabajador inicioTrabajador = new InicioTrabajador();
+            InicioAdmin inicioTrabajador = new InicioAdmin();
                 inicioTrabajador.setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_volverFieldActionPerformed
 
@@ -256,6 +257,9 @@ public class VentanaRegistroProducto extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaRegistroProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

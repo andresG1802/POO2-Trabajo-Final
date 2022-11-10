@@ -15,8 +15,10 @@ public class Conexion {
     public Conexion(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://sql10.freesqldatabase.com:3306/sql10538765",
-                    "sql10538765","k5f1scnEQp");
+            //con=DriverManager.getConnection("jdbc:mysql://sql10.freesqldatabase.com:3306/sql10538765",
+            //        "sql10538765","k5f1scnEQp");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/proyectopooii",
+                  "root","");
         } catch (Exception e) {
             System.err.println("Error:" +e);
         }

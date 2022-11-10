@@ -4,21 +4,23 @@
  */
 package General;
 
+import Administrador.Administrador;
 import Cliente.InicioCliente;
 import Cliente.VentanaRegistroCliente;
-import Cliente.VentanaRegistroClienteAndres;
-import Trabajador.InicioTrabajador;
-import java.io.File;
-import java.io.FileNotFoundException;
+import Administrador.InicioAdmin;
 import java.sql.*;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 import static trabajofinal.TrabajoFinal.cn;
 import static trabajofinal.TrabajoFinal.cliente;
-import static trabajofinal.TrabajoFinal.trabajador;
+import static trabajofinal.TrabajoFinal.vendedor;
+import static trabajofinal.TrabajoFinal.admin;
+import static trabajofinal.TrabajoFinal.autenticacion;
+
+
 
 import Cliente.Cliente;
-import Trabajador.Trabajador;
+import Vendedor.InicioVendedor;
+import Vendedor.Vendedor;
 
 
 /**
@@ -185,7 +187,8 @@ public class VentanaLogin extends javax.swing.JFrame {
        
         PreparedStatement st;
         ResultSet rs;
-        if(login(usuario,contrasena) == "Cliente")
+        login(usuario, contrasena);
+        if("Cliente".equals(autenticacion))
         {
          
             InicioCliente ventanaInicioCliente = new InicioCliente();
@@ -193,9 +196,15 @@ public class VentanaLogin extends javax.swing.JFrame {
             ventanaInicioCliente.setVisible(true);
             
         }
-        else if (login(usuario,contrasena) == "Trabajador")
+        else if ("Vendedor".equals(autenticacion))
         {
-            InicioTrabajador ventanaInicioTrabajador = new InicioTrabajador();
+            InicioVendedor ventanaInicioVendedor = new InicioVendedor();
+            setVisible(false);
+            ventanaInicioVendedor.setVisible(true);
+        }
+        else if ("Administrador".equals(autenticacion))
+        {
+            InicioAdmin ventanaInicioTrabajador = new InicioAdmin();
             setVisible(false);
             ventanaInicioTrabajador.setVisible(true);
         }
@@ -245,9 +254,8 @@ public class VentanaLogin extends javax.swing.JFrame {
             }
         });
     }
-    public String login(String usuario,String contrasena)
+    public void login(String usuario,String contrasena)
     {
-        String autenticacion = "Error";
         
         PreparedStatement st;
         ResultSet rs;
@@ -282,10 +290,13 @@ public class VentanaLogin extends javax.swing.JFrame {
             }
             else
             {
+                System.out.println("hol");
+                System.out.println(usuario);
                  try {
                 st = cn.con.prepareStatement("select * from trabajador join sistema_pension on "
                         + "trabajador.sist_pension_trabajador = sistema_pension.id_sistema join seguro_salud on "
-                        + "trabajador.seguro_salud_trabajador = seguro_salud.id_seguro where dni_trabajador=?");
+                        + "trabajador.seguro_salud_trabajador = seguro_salud.id_seguro join roles on "
+                        + "trabajador.rol = roles.id_rol where dni_trabajador=?");
                 st.setString(1,usuario);
                 rs=st.executeQuery();
                 rs.next();
@@ -301,19 +312,32 @@ public class VentanaLogin extends javax.swing.JFrame {
                 String seguroSalud = rs.getString("seguro");
                 String fechaIngreso = rs.getString("fecha_ingreso_trabajador");
                 int hijos = rs.getInt("hijos_trabajador");
-                trabajador = new Trabajador( hijos, sueldo, sistPension, seguroSalud, 
-                        fechaIngreso, id, contrasena, usuario,  nombres, 
-                         apellidos,  fechaNac,  sexo,  correo,  direccion);
+                String tipo = rs.getString("roles.rol");
+                System.out.println(tipo);
+                if ("Vendedor".equals(tipo))
+                {
+                    vendedor = new Vendedor( hijos, sueldo, sistPension, seguroSalud, 
+                    fechaIngreso, id, contrasena, usuario,  nombres, 
+                     apellidos,  fechaNac,  sexo,  correo,  direccion);               
+                    autenticacion = "Vendedor";
+
+                    
+                }
+                else if ("Administrador".equals(tipo))
+                {
+                    admin = new Administrador( hijos, sueldo, sistPension, seguroSalud, 
+                    fechaIngreso, id, contrasena, usuario,  nombres, 
+                     apellidos,  fechaNac,  sexo,  correo,  direccion);                
+                    autenticacion = "Administrador";
+                    
+                }
             } catch (Exception e) {
                 System.out.println(e);
             } 
-                autenticacion = "Trabajador";
-            }
+        }
         } catch (Exception e) {
             System.out.println(e);
-        }
-        return autenticacion;
-                
+        }                
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonIniciarSesion1;

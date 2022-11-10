@@ -4,12 +4,11 @@
  */
 package trabajofinal;
 
+import Administrador.Administrador;
 import Cliente.Cliente;
 import General.Conexion;
 import General.VentanaLogin;
-import Trabajador.Trabajador;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import Vendedor.Vendedor;
 
 /**
  *
@@ -17,8 +16,10 @@ import java.sql.Statement;
  */
 public class TrabajoFinal {
     public static Conexion cn = new Conexion();
+    public static String autenticacion = "None";
     public static Cliente cliente = new Cliente();
-    public static Trabajador trabajador = new Trabajador();
+    public static Vendedor vendedor = new Vendedor();
+    public static Administrador admin =  new Administrador();
 
     /**
      * @param args the command line arguments
