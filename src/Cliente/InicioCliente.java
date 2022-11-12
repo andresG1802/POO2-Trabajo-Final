@@ -62,7 +62,12 @@ public class InicioCliente extends javax.swing.JFrame {
 
         jLabel2.setText("Seleccione la opcion que desea relizar :");
 
-        jButton4.setText("Historial de ventas");
+        jButton4.setText("Historial de compras");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText(" Cerrar Sesion");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +97,7 @@ public class InicioCliente extends javax.swing.JFrame {
                                     .addComponent(jButton3))))
                         .addGap(18, 18, 18)
                         .addComponent(jButton4)))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,6 +166,10 @@ public class InicioCliente extends javax.swing.JFrame {
         setVisible(false);
         ventanaLogin.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
